@@ -12,17 +12,14 @@ md %newVersion%
 md %newVersion%\config
 
 cd src/Frontend/
-dotnet publish -c Release -o %newVersion%
-move %newVersion% ../../%newVersion%/Frontend
-
+dotnet publish -c Release -o ../../%newVersion%/Frontend
 if %ERRORLEVEL% NEQ 0 (
     echo Unsuccessful build
 	exit /b 0
 )
 
-cd src/Backend/
-dotnet publish -c Release -o %newVersion%
-move %newVersion% ../../%newVersion%/Backend
+cd ../../src/Backend/
+dotnet publish -c Release -o ../../%newVersion%/Backend
 if %ERRORLEVEL% NEQ 0 (
     echo Unsuccessful build
 	exit /b 0
