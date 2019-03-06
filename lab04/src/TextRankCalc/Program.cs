@@ -19,6 +19,7 @@ namespace TextRankCalc
             {
                 string id = message;
                 string data = db.StringGet(id);
+                string ratio= "";
                 int vowels = 0;
                 int consonants = 0;
 
@@ -34,7 +35,7 @@ namespace TextRankCalc
                         ++consonants;
                     }
                 }
-                string ratio = vowels + "/" + consonants;
+                ratio = vowels + "/" + consonants;
                 db.StringSet("TextRankCalc_" + id, ratio);
             });
             Console.ReadKey();
