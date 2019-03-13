@@ -43,13 +43,11 @@ namespace VowelConsCounter
                             ++consonants;
                         }
                     }
-                    //ratio = vowels + "/" + consonants;
-                    //db.StringSet("TextRankCalc_" + id, ratio);
-
                     SendMessage($"{id}:{vowels}:{consonants}", redis);
                     msg = redis.GetDatabase().ListRightPop( COUNTER_QUEUE_NAME );
                }
            });
+            Console.Title = "VowelConsCounter";
             Console.WriteLine("Press Enter to exit");
             Console.ReadLine();
         }
@@ -61,9 +59,9 @@ namespace VowelConsCounter
             redis.GetSubscriber().Publish( RATE_HINTS_CHANNEL, "" );
         }
 
-        private static string ParseData( string msg, int index )
+        private static string ParseData( string msg, int pos )
         {
-            return msg.Split( ':' )[index];
+            return msg.Split( ':' )[pos];
         }
     }
 }

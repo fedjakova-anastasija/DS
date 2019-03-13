@@ -18,29 +18,29 @@ namespace VowelConsRater
                 string msg = redis.GetDatabase().ListRightPop(RATE_QUEUE_NAME);
                 while (msg != null)
                 {
-                    string ratio= "";
                     string id = ParseData( msg, 0 );
                     string vowels = ParseData(msg, 1);
                     string consonants = ParseData(msg, 2);
-                    DoJob( id );
-                    ratio = vowels + "/" + consonants;
+                    string ratio = vowels + "/" + consonants;
+                    DoJob( "Ratio: ", ratio );
                     db.StringSet("TextRankCalc_" + id, ratio);
                     msg = redis.GetDatabase().ListRightPop(RATE_QUEUE_NAME);
                 }
             }); 
+            Console.Title = "VowelConsRater";
             Console.WriteLine("Press Enter to exit");
             Console.ReadLine();
         }
 
-        private static void DoJob( string jobData )
+        private static void DoJob( string message, string jobData )
         {
-            Console.WriteLine( $"Job data: {jobData}" );
+            Console.WriteLine( $"{message}{jobData}" );
             System.Threading.Thread.Sleep(1500); // emulate loading
         }
 
-        private static string ParseData( string msg, int index )
+        private static string ParseData( string msg, int pos )
         {
-            return msg.Split( ':' )[index];
+            return msg.Split( ':' )[pos];
         }
     }
 }

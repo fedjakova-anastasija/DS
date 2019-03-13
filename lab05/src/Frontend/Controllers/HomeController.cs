@@ -11,6 +11,8 @@ namespace Frontend.Controllers
 {
     public class HomeController : Controller
     {
+        static readonly string url = "http://localhost:5000/api/values/";
+
         public IActionResult Index()
         {
             return View();
@@ -26,10 +28,9 @@ namespace Frontend.Controllers
         public async Task<IActionResult> TextDetails(string id)
         {
             string textDetails = null; 
-            string url = "http://localhost:5000/api/values/" + id;
             HttpClient client = new HttpClient();
 
-            HttpResponseMessage request = await client.GetAsync(url);
+            HttpResponseMessage request = await client.GetAsync(url + id);
             textDetails = await request.Content.ReadAsStringAsync();
             ViewData["TextDetails"] = textDetails;
 
@@ -43,7 +44,6 @@ namespace Frontend.Controllers
 
             if (data != null)
             {
-                string url = "http://127.0.0.1:5000/api/values";
                 HttpClient client = new HttpClient();
 
                 HttpResponseMessage request = await client.PostAsJsonAsync(url, data);

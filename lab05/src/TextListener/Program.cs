@@ -19,7 +19,8 @@ namespace TextListener
                 Console.WriteLine("DATA: " + data);
                 Console.WriteLine("ID: " + id);
                 Console.WriteLine("----------------------------------------");
-            });                 
+            });      
+            Console.Title = "TextListener";           
             Console.ReadLine();
         }
     }

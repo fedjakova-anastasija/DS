@@ -19,8 +19,8 @@ namespace TextRankCalc
                 string id = message;
                 string data = db.StringGet(id);
                 SendMessage($"{id}:{data}", redis);
-                Console.WriteLine("Message sent => " + id + ": " + data);
             });
+            Console.Title = "TextRankCalc";
             Console.ReadKey();
         }
 
