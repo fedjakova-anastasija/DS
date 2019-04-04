@@ -12,12 +12,12 @@ namespace TextRankCalc
         {
             Redis redis = new Redis();
             ISubscriber sub = redis.Sub();
-            IDatabase getDB = redis.GetDB(4);
+            IDatabase getDB = redis.GetDB(0);
 
             sub.Subscribe("events", (channel, message) =>
             {
                 string id = message;
-                string valueFromMainDB = redis.GetStrFromDB(4, id);
+                string valueFromMainDB = redis.GetStrFromDB(0, id);
                 SendMessage($"{id}:{valueFromMainDB}", getDB, sub);
                 ShowProcess(id, valueFromMainDB);
             });

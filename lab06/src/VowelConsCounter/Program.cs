@@ -18,7 +18,7 @@ namespace VowelConsCounter
         {
             Redis redis = new Redis();
             ISubscriber sub = redis.Sub();
-            IDatabase getDB = redis.GetDB(4);
+            IDatabase getDB = redis.GetDB(0);
 
             sub.Subscribe(COUNTER_HINTS_CHANNEL, delegate
             {
@@ -26,7 +26,7 @@ namespace VowelConsCounter
                 while (msg != null)
                 {
                     string id = ParseData(msg, 0);
-                    string valueFromMainDB = redis.GetStrFromDB(4, id);
+                    string valueFromMainDB = redis.GetStrFromDB(0, id);
                     string valueFromRegionDB = redis.GetStrFromDB( GetDatabaseId(valueFromMainDB), id);
                     
                     int vowels = 0;

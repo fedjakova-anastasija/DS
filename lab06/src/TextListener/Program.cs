@@ -12,7 +12,7 @@ namespace TextListener
 
             sub.Subscribe("events", (channel, message) => {
                 string id = message;
-                string valueFromMainDB = redis.GetStrFromDB(4, id);
+                string valueFromMainDB = redis.GetStrFromDB(0, id);
                 ShowProcess(id, valueFromMainDB);
             });
             

@@ -26,7 +26,7 @@ namespace Backend.Controllers
             
             for (int i = 0; i < 5; i++)
             {
-                valueFromMainDB = redis.GetStrFromDB(4, text);
+                valueFromMainDB = redis.GetStrFromDB(0, text);
                 valueFromRegionDB = redis.GetStrFromDB( GetDatabaseId(valueFromMainDB), text);
 
                 if (valueFromRegionDB == null)
@@ -50,7 +50,7 @@ namespace Backend.Controllers
             int regionDatabaseId = Redis.GetDatabaseId(regionCode);
             string contextId = "TextRankCalc_" + id;
            
-            redis.Add(4, contextId, regionDatabaseId.ToString());
+            redis.Add(0, contextId, regionDatabaseId.ToString());
             redis.Add(regionDatabaseId, contextId, data);
             ShowProcess(contextId, regionCode + "(" + regionDatabaseId + ")");
 

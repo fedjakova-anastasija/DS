@@ -12,7 +12,7 @@ namespace VowelConsRater
         {
             Redis redis = new Redis();
             ISubscriber sub = redis.Sub();
-            IDatabase getDB = redis.GetDB(4);
+            IDatabase getDB = redis.GetDB(0);
 
             sub.Subscribe(RATER_HINTS_CHANNEL, delegate
             {
@@ -23,7 +23,7 @@ namespace VowelConsRater
                     string vowels = ParseData(msg, 1);
                     string consonants = ParseData(msg, 2);    
                     string ratio = vowels + "/" + consonants;
-                    string valueFromMainDB = redis.GetStrFromDB(4, id);
+                    string valueFromMainDB = redis.GetStrFromDB(0, id);
                     
                     DoJob( "RATIO: ", ratio ); 
                     ShowProcess(id, valueFromMainDB);
