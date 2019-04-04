@@ -18,11 +18,6 @@ namespace Frontend.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Upload()
         {
@@ -37,7 +32,10 @@ namespace Frontend.Controllers
 
             HttpResponseMessage request = await client.GetAsync(url + id);
             textDetails = await request.Content.ReadAsStringAsync();
-            ViewData["TextDetails"] = textDetails;
+            string ratio = ParseData(textDetails, 0);
+            string region = ParseData(textDetails, 1);
+            ViewData["TextDetails"] = ratio;
+            ViewData["Region"] = region;
         
             return View();
         }
@@ -63,6 +61,11 @@ namespace Frontend.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private static string ParseData( string msg, int pos )
+        {
+            return msg.Split( ':' )[pos];
         }
 
         public void ShowProcess(string data, string region)

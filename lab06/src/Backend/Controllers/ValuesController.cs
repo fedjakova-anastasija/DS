@@ -35,7 +35,7 @@ namespace Backend.Controllers
 				}
             }
             
-            string data = valueFromRegionDB + " " + valueFromMainDB;
+            string data = valueFromRegionDB + ":" + valueFromMainDB;
             return data;
         }
 
