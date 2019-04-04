@@ -18,13 +18,10 @@ namespace TextListener
         {
             db = redis.GetDatabase(databaseId);
             db.StringSet(key, value);
-            //Console.WriteLine(databaseId.ToString() + " " + value);
         }
 
         public void Publish(string key)
         {
-            //db = redis.GetDatabase(databaseId);
-            //db.StringSet(key, value);
             sub = redis.GetSubscriber();
             sub.Publish("events", key);    
         }
@@ -42,8 +39,6 @@ namespace TextListener
         public string GetStrFromDB(int databaseId, string key)
         {
             db = redis.GetDatabase(databaseId);
-            //Console.WriteLine(databaseId.ToString() + " " + key);
-
             return db.StringGet(key);
         }
 

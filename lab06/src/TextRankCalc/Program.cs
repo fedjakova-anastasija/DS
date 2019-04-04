@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
 using StackExchange.Redis;
 
 namespace TextRankCalc
@@ -18,14 +16,12 @@ namespace TextRankCalc
 
             sub.Subscribe("events", (channel, message) =>
             {
-                string text = message;
-                string valueFromMainDB = redis.GetStrFromDB(4, text);
-                //valueFromRegionDB = redis.GetStrFromDB( GetDatabaseId(valueFromMainDB), text);
-                SendMessage($"{text}:{valueFromMainDB}", getDB, sub);
-                ShowProcess(text, valueFromMainDB);
+                string id = message;
+                string valueFromMainDB = redis.GetStrFromDB(4, id);
+                SendMessage($"{id}:{valueFromMainDB}", getDB, sub);
+                ShowProcess(id, valueFromMainDB);
             });
             
-            Console.WriteLine("TextRankCalc");
             Console.ReadLine();
         }
 

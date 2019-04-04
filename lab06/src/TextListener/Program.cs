@@ -11,11 +11,11 @@ namespace TextListener
             ISubscriber sub = redis.Sub();
 
             sub.Subscribe("events", (channel, message) => {
-                string text = message;
-                string valueFromMainDB = redis.GetStrFromDB(4, text);
-                string valueFromRegionDB = redis.GetStrFromDB( GetDatabaseId(valueFromMainDB), text);
-                ShowProcess(text, valueFromMainDB);
+                string id = message;
+                string valueFromMainDB = redis.GetStrFromDB(4, id);
+                ShowProcess(id, valueFromMainDB);
             });
+            
             Console.ReadLine();
         }
         

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using StackExchange.Redis;
 
@@ -24,7 +23,6 @@ namespace VowelConsCounter
             sub.Subscribe(COUNTER_HINTS_CHANNEL, delegate
             {
                 string msg = getDB.ListRightPop(COUNTER_QUEUE_NAME);
-                Console.WriteLine(msg);
                 while (msg != null)
                 {
                     string id = ParseData(msg, 0);
@@ -52,6 +50,7 @@ namespace VowelConsCounter
                 }
             });
             
+            Console.Title = "VowelConsCounter";
             Console.WriteLine("Press Enter to exit");
             Console.ReadLine();
         }

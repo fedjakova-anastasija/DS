@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
 using StackExchange.Redis;
 
 namespace VowelConsRater
@@ -33,7 +31,8 @@ namespace VowelConsRater
                     msg = getDB.ListRightPop(RATER_QUEUE_NAME);
                 }
             });
-
+            
+            Console.Title = "VowelConsRater";
             Console.WriteLine("Press Enter to exit");
             Console.ReadLine();
         }

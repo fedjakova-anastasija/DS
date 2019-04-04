@@ -4,11 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Concurrent;
-using System.Threading;
 using StackExchange.Redis;
-using System.Configuration;
-using Microsoft.AspNetCore.Mvc.Core;
-using Newtonsoft.Json;
+using System.Threading;
 
 namespace Backend.Controllers
 {
@@ -23,7 +20,7 @@ namespace Backend.Controllers
         [HttpGet("{id}")]
         public string Get([FromRoute] string id)
         {
-            string valueFromMainDB = null;            
+            string valueFromMainDB = null;
             string valueFromRegionDB = null;
             string text = "TextRankCalc_" + id;
             
@@ -37,10 +34,8 @@ namespace Backend.Controllers
 					Thread.Sleep(200);
 				}
             }
-
-            //string data = valueFromRegionDB + ":" + valueFromMainDB;
-            string data = valueFromRegionDB + " " + valueFromMainDB;
             
+            string data = valueFromRegionDB + " " + valueFromMainDB;
             return data;
         }
 
@@ -53,14 +48,13 @@ namespace Backend.Controllers
             string data = ParseData(value, 0);
             string regionCode = ParseData(value, 1);
             int regionDatabaseId = Redis.GetDatabaseId(regionCode);
-            string text = "TextRankCalc_" + id;
-            
-            redis.Add(regionDatabaseId, text, data);
-            redis.Add(4, text, regionDatabaseId.ToString());
-            ShowProcess(text, regionCode + "(" + regionDatabaseId + ")");
+            string contextId = "TextRankCalc_" + id;
+           
+            redis.Add(4, contextId, regionDatabaseId.ToString());
+            redis.Add(regionDatabaseId, contextId, data);
+            ShowProcess(contextId, regionCode + "(" + regionDatabaseId + ")");
 
-            //redis.Publish($"{text}:");
-            redis.Publish(text);
+            redis.Publish(contextId);
             return id;
         }
 
