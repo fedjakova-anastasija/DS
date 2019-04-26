@@ -18,23 +18,22 @@ namespace Backend.Controllers
         
         // GET api/statistics/<TextRankCalculated>
         [HttpGet("{TextRankCalculated}")]
-        public IActionResult Get()
+        public string Get()
         {
             string valueFromMainDB = null;
-            string valueFromRegionDB = null;
             string text = "TextRankCalculated";
             
             for (int i = 0; i < 5; i++)
             {
                 valueFromMainDB = redis.GetStrFromDB(0, text);
 
-                if (valueFromRegionDB == null)
+                if (valueFromMainDB == null)
 				{
 					Thread.Sleep(200);
 				}
             }
 
-            return Ok(valueFromMainDB);
+            return valueFromMainDB;
         }
 
         // POST api/statistics

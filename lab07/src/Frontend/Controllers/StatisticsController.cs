@@ -11,7 +11,7 @@ namespace Frontend.Controllers
 {
     public class StatisticsController : Controller
     {
-        static readonly string url = "http://localhost:5000/api/statistics/";
+        static readonly string url = "http://localhost:5000/api/statistics/{0}";
 
         [HttpGet]
         public async Task<IActionResult> TextStatistics()
@@ -19,10 +19,9 @@ namespace Frontend.Controllers
             string textStatistics = null; 
             HttpClient client = new HttpClient();
             string tail = "TextRankCalculated";
-            //HttpResponseMessage request = await client.GetAsync(url + tail);
-            HttpResponseMessage request = await client.GetAsync("http://localhost:5000/api/statistics/TextRankCalculated");
+            HttpResponseMessage request = await client.GetAsync(String.Format(url, tail));
             textStatistics = await request.Content.ReadAsStringAsync();
-            
+
             string textNum = ParseData(textStatistics, 0);
             string highRankPart = ParseData(textStatistics, 1);
             string avgRank = ParseData(textStatistics, 2);

@@ -20,6 +20,7 @@ namespace VowelConsRater
                 while (msg != null)
                 {                   
                     string id = ParseData(msg, 0);
+                    string rankId = id.Substring(13, id.Length - 13);
                     string vowels = ParseData(msg, 1);
                     string consonants = ParseData(msg, 2);    
                     string ratio = vowels + "/" + consonants;
@@ -30,7 +31,7 @@ namespace VowelConsRater
                     ShowProcess(id, valueFromMainDB);
                     redis.Add(GetDatabaseId(valueFromMainDB), id, ratio);
                     msg = getDB.ListRightPop(RATER_QUEUE_NAME);
-                    sub.Publish("textRankCalculated", $"{id}:{ratioNumber}");
+                    sub.Publish("events", $"{rankId}:{ratioNumber}");
                 }
             });
             

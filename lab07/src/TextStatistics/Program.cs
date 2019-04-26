@@ -14,19 +14,20 @@ namespace TextStatistics
             Redis redis = new Redis();
             ISubscriber sub = redis.Sub();
 
-            sub.Subscribe("textRankCalculated", (channel, message) => {
+            sub.Subscribe("events", (channel, message) => {
                 string msg = message;
                 string id = ParseData(msg, 0);
                 string text = "TextRankCalculated";                
                 string ratio = ParseData(msg, 1);
                 double ratioNumber = Convert.ToDouble(ratio);
-                string valueFromMainDB = redis.GetStrFromDB(0, id);
+
                 totalRatioNumber += ratioNumber;
                 textNum++;                
                 avgRank = totalRatioNumber / textNum;
                 if (ratioNumber > 0.5) {
                     highRankPart++;
                 }
+                
                 redis.Add(0, text, $"{textNum}:{highRankPart}:{avgRank}");
                 ShowProcess(textNum.ToString(), highRankPart.ToString(), avgRank.ToString());
             });
