@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Text statistics";
+}
+
+<div>
+    <p>
+        Общее количество всех обработанных текстов: @(ViewData["TextNum"])           
+    </p>
+    <p>
+        Количество текстов с высокой оценкой (выше 0.5): @(ViewData["HighRankPart"])           
+    </p>
+    <p>
+        Средняя оценка: @(ViewData["AvgRank"])           
+    </p>
+    <br>
+    <p>
+        Количество отвергнутых запросов: @(ViewData["RejectedRequestsCount"])           
+    </p>
+</div>
